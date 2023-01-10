@@ -33,7 +33,7 @@ jobs:
         # In case of number of workers would change, update TOTAL_WORKERS env variable in "Cypress Tests" step.
         # Be aware that specs should be sequential integers starting from 1 without gaps
         # based on logic in "Cypress Tests" step.
-        specs: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+        specs: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 
     steps:
       - name: Checkout Streamlit code
@@ -67,7 +67,7 @@ jobs:
       - name: Cypress Tests
         env:
           CURRENT_RUN: ${{matrix.specs}}
-          TOTAL_WORKERS: 11
+          TOTAL_WORKERS: 9
         run: |
           js_specs=(e2e/specs/*)
 
