@@ -18,9 +18,9 @@ import unittest
 from unittest.mock import patch
 
 try:
-    from tensorflow.python.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D
-    from tensorflow.python.keras.models import Sequential
-    from tensorflow.python.keras.utils import vis_utils
+    from tf.keras import Sequential
+    from tf.keras.layers import Conv2D, Dense, Flatten, MaxPool2D
+    from tf.keras.utils import model_to_dot
 
     HAS_KERAS = True
 except ImportError:
@@ -46,5 +46,5 @@ class KerasTest(unittest.TestCase):
         ) as graphviz_chart:
             st.write(model)
 
-            dot = vis_utils.model_to_dot(model)
+            dot = model_to_dot(model)
             graphviz_chart.assert_called_once_with(dot.to_string())
