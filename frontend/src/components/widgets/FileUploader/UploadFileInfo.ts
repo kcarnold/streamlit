@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-import { CancelTokenSource } from "axios"
-
 export interface UploadingStatus {
   type: "uploading"
-  cancelToken: CancelTokenSource
+  signal: AbortSignal
   progress: number
 }
 

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { CancelToken } from "axios"
 import HttpClient from "src/lib/HttpClient"
 import { SessionInfo } from "src/lib/SessionInfo"
 import _ from "lodash"
@@ -59,7 +58,7 @@ export class FileUploadClient extends HttpClient {
    * @param widget: the FileUploader widget that's doing the upload.
    * @param file: the files to upload.
    * @param onUploadProgress: an optional function that will be called repeatedly with progress events during the upload.
-   * @param cancelToken: an optional axios CancelToken that can be used to cancel the in-progress upload.
+   * @param signal: an optional AbortController signal that can be used to cancel the in-progress upload.
    *
    * @return a Promise<number> that resolves with the file's unique ID, as assigned by the server.
    */
@@ -67,7 +66,7 @@ export class FileUploadClient extends HttpClient {
     widget: WidgetInfo,
     file: File,
     onUploadProgress?: (progressEvent: any) => void,
-    cancelToken?: CancelToken
+    signal?: AbortSignal
   ): Promise<number> {
     const form = new FormData()
     form.append("sessionId", SessionInfo.current.sessionId)
@@ -76,7 +75,7 @@ export class FileUploadClient extends HttpClient {
 
     this.offsetPendingRequestCount(widget.formId, 1)
     return this.request<number>("_stcore/upload_file", {
-      cancelToken,
+      signal,
       method: "POST",
       data: form,
       responseType: "text",

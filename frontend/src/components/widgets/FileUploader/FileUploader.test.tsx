@@ -512,7 +512,7 @@ describe("FileUploader widget", () => {
     const files = getFiles(wrapper)
 
     expect(files[0].status.type).toBe("uploading")
-    expect((files[0].status as UploadingStatus).cancelToken).toBeDefined()
+    expect((files[0].status as UploadingStatus).signal).toBeDefined()
     expect(files[0].id).toBeDefined()
   })
 

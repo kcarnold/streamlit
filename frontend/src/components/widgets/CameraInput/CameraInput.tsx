@@ -15,7 +15,6 @@
  */
 
 import { X } from "@emotion-icons/open-iconic"
-import axios from "axios"
 import _ from "lodash"
 import React from "react"
 
@@ -108,6 +107,8 @@ class CameraInput extends React.PureComponent<Props, State> {
   private RESTORED_FROM_WIDGET_STRING = "RESTORED_FROM_WIDGET"
 
   private readonly formClearHelper = new FormClearHelper()
+
+  private abortController = new AbortController()
 
   public constructor(props: Props) {
     super(props)
@@ -448,7 +449,7 @@ class CameraInput extends React.PureComponent<Props, State> {
       // The file hasn't been uploaded. Let's cancel the request.
       // However, it may have been received by the server so we'll still
       // send out a request to delete.
-      file.status.cancelToken.cancel()
+      this.abortController.abort()
     }
 
     this.removeFile(fileId)
@@ -532,7 +533,7 @@ class CameraInput extends React.PureComponent<Props, State> {
       fileId,
       file.setStatus({
         type: "uploading",
-        cancelToken: file.status.cancelToken,
+        signal: file.status.signal,
         progress: newProgress,
       })
     )
@@ -547,25 +548,22 @@ class CameraInput extends React.PureComponent<Props, State> {
 
   public uploadFile = (file: File): void => {
     // Create an UploadFileInfo for this file and add it to our state.
-    const cancelToken = axios.CancelToken.source()
+    const { signal } = this.abortController
     const uploadingFileInfo = new UploadFileInfo(
       file.name,
       file.size,
       this.nextLocalFileId(),
       {
         type: "uploading",
-        cancelToken,
+        signal,
         progress: 1,
       }
     )
     this.addFile(uploadingFileInfo)
 
     this.props.uploadClient
-      .uploadFile(
-        this.props.element,
-        file,
-        e => this.onUploadProgress(e, uploadingFileInfo.id),
-        cancelToken.token
+      .uploadFile(this.props.element, file, e =>
+        this.onUploadProgress(e, uploadingFileInfo.id)
       )
       .then(newFileId =>
         this.onUploadComplete(uploadingFileInfo.id, newFileId)
@@ -573,7 +571,7 @@ class CameraInput extends React.PureComponent<Props, State> {
       .catch(err => {
         // If this was a cancel error, we don't show the user an error -
         // the cancellation was in response to an action they took.
-        if (!axios.isCancel(err)) {
+        if (!signal.aborted) {
           this.updateFile(
             uploadingFileInfo.id,
             uploadingFileInfo.setStatus({

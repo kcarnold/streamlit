@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { CancelTokenSource } from "axios"
 import React from "react"
 import { mount, shallow } from "src/lib/test_util"
 
@@ -40,7 +39,7 @@ describe("FileStatus widget", () => {
   it("shows progress bar when uploading", () => {
     const props = getProps({
       type: "uploading",
-      cancelToken: null as unknown as CancelTokenSource,
+      signal: null as unknown as AbortSignal,
       progress: 40,
     })
     const wrapper = shallow(<UploadedFileStatus {...props} />)
