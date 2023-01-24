@@ -51,6 +51,7 @@ export default class HttpClient {
     if (this.csrfEnabled) {
       const xsrfCookie = getCookie("_xsrf")
       if (xsrfCookie != null) {
+        // @ts-ignore
         params.headers = {
           "X-Xsrftoken": xsrfCookie,
           ...(params.headers || {}),
