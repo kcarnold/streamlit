@@ -317,14 +317,14 @@ export function RenderedMarkdown({
     rehypePlugins.push(rehypeRaw)
   }
 
-  // limits allowed markdown, default is allow all
-  let allowed
-  if (isLabel) {
-    allowed = ["p", "em", "strong", "del", "code", "a", "span"]
-  }
-  if (isButton || isCheckbox || isExpander || isTabs) {
-    allowed = ["p", "em", "strong", "del"]
-  }
+  // // limits allowed markdown, default is allow all
+  // let allowed
+  // if (isLabel) {
+  //   allowed = ["p", "em", "strong", "del", "code", "a", "span"]
+  // }
+  // if (isButton || isCheckbox || isExpander || isTabs) {
+  //   allowed = ["p", "em", "strong", "del"]
+  // }
 
   return (
     <ErrorBoundary>
@@ -333,7 +333,7 @@ export function RenderedMarkdown({
         rehypePlugins={rehypePlugins}
         components={renderers}
         transformLinkUri={transformLinkUri}
-        allowedElements={allowed}
+        // allowedElements={allowed}
       >
         {source}
       </ReactMarkdown>
