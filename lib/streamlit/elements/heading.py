@@ -30,7 +30,11 @@ SUBHEADER_TAG = "h3"
 class HeadingMixin:
     @gather_metrics("header")
     def header(
-        self, body: SupportsStr, anchor: Optional[str] = None
+        self,
+        body: SupportsStr,
+        anchor: Optional[str] = None,
+        *,  # keyword-only arguments:
+        help: Optional[str] = None,
     ) -> "DeltaGenerator":
         """Display text in header formatting.
 
@@ -58,6 +62,9 @@ class HeadingMixin:
             The anchor name of the header that can be accessed with #anchor
             in the URL. If omitted, it generates an anchor using the body.
 
+        help : str
+            An optional tooltip that gets displayed next to the header.
+
         Examples
         --------
         >>> import streamlit as st
@@ -71,11 +78,17 @@ class HeadingMixin:
             header_proto.anchor = anchor
         header_proto.body = clean_text(body)
         header_proto.tag = HEADER_TAG
+        if help:
+            header_proto.help = help
         return self.dg._enqueue("heading", header_proto)
 
     @gather_metrics("subheader")
     def subheader(
-        self, body: SupportsStr, anchor: Optional[str] = None
+        self,
+        body: SupportsStr,
+        anchor: Optional[str] = None,
+        *,  # keyword-only arguments:
+        help: Optional[str] = None,
     ) -> "DeltaGenerator":
         """Display text in subheader formatting.
 
@@ -103,6 +116,9 @@ class HeadingMixin:
             The anchor name of the header that can be accessed with #anchor
             in the URL. If omitted, it generates an anchor using the body.
 
+        help : str
+            An optional tooltip that gets displayed next to the subheader.
+
         Examples
         --------
         >>> import streamlit as st
@@ -116,12 +132,18 @@ class HeadingMixin:
             subheader_proto.anchor = anchor
         subheader_proto.body = clean_text(body)
         subheader_proto.tag = SUBHEADER_TAG
+        if help:
+            subheader_proto.help = help
 
         return self.dg._enqueue("heading", subheader_proto)
 
     @gather_metrics("title")
     def title(
-        self, body: SupportsStr, anchor: Optional[str] = None
+        self,
+        body: SupportsStr,
+        anchor: Optional[str] = None,
+        *,  # keyword-only arguments:
+        help: Optional[str] = None,
     ) -> "DeltaGenerator":
         """Display text in title formatting.
 
@@ -152,6 +174,9 @@ class HeadingMixin:
             The anchor name of the header that can be accessed with #anchor
             in the URL. If omitted, it generates an anchor using the body.
 
+        help : str
+            An optional tooltip that gets displayed next to the title.
+
         Examples
         --------
         >>> import streamlit as st
@@ -165,6 +190,8 @@ class HeadingMixin:
             title_proto.anchor = anchor
         title_proto.body = clean_text(body)
         title_proto.tag = TITLE_TAG
+        if help:
+            title_proto.help = help
 
         return self.dg._enqueue("heading", title_proto)
 

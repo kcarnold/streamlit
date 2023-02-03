@@ -22,7 +22,10 @@ import StreamlitMarkdown, {
 } from "src/components/shared/StreamlitMarkdown"
 import { useTheme } from "@emotion/react"
 import { Theme } from "src/theme"
-import { StyledTooltipIconWrapper } from "./styled-components"
+import {
+  StyledTooltipIconWrapper,
+  StyledLabelHelpInline,
+} from "./styled-components"
 
 export interface TooltipIconProps {
   placement?: Placement
@@ -57,6 +60,27 @@ function TooltipIcon({
         {children || <HelpCircleIcon className="icon" size={iconSize} />}
       </Tooltip>
     </StyledTooltipIconWrapper>
+  )
+}
+
+export const InlineTooltipIcon = ({
+  placement = Placement.TOP_RIGHT,
+  iconSize = "16",
+  content,
+  children,
+  markdownProps,
+}: TooltipIconProps): ReactElement => {
+  return (
+    <StyledLabelHelpInline>
+      <TooltipIcon
+        placement={placement}
+        iconSize={iconSize}
+        content={content}
+        markdownProps={markdownProps}
+      >
+        {children}
+      </TooltipIcon>
+    </StyledLabelHelpInline>
   )
 }
 

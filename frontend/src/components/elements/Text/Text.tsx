@@ -16,6 +16,7 @@
 
 import React, { ReactElement } from "react"
 import { Text as TextProto } from "src/autogen/proto"
+import { InlineTooltipIcon } from "src/components/shared/TooltipIcon"
 import { StyledText } from "./styled-components"
 
 export interface TextProps {
@@ -32,6 +33,9 @@ export default function Text({ width, element }: TextProps): ReactElement {
   return (
     <StyledText data-testid="stText" style={styleProp}>
       {element.body}
+      {element.help && (
+        <InlineTooltipIcon content={element.help}></InlineTooltipIcon>
+      )}
     </StyledText>
   )
 }

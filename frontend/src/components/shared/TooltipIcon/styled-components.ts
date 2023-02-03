@@ -30,3 +30,18 @@ export const StyledTooltipIconWrapper = styled.div(({ theme }) => ({
     },
   },
 }))
+
+export const StyledLabelHelpWrapper = styled.div(({ theme }) => ({
+  display: "flex",
+  visibility: "visible",
+  verticalAlign: "middle",
+  flexDirection: "row",
+  alignItems: "center",
+}))
+
+export const StyledLabelHelpInline = styled.label(({ theme }) => ({
+  marginLeft: theme.spacing.xs,
+  position: "relative",
+  display: "flex",
+  flexDirection: "row",
+}))

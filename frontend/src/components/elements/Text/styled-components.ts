@@ -21,4 +21,9 @@ export const StyledText = styled.div(({ theme }) => ({
   whiteSpace: "pre",
   fontSize: theme.fontSizes.sm,
   overflowX: "auto",
+  display: "flex",
+  visibility: "visible",
+  verticalAlign: "middle",
+  flexDirection: "row",
+  alignItems: "center",
 }))
