@@ -34,7 +34,7 @@ class MarkdownMixin:
         *,  # keyword-only arguments:
         help: Optional[str] = None,
     ) -> "DeltaGenerator":
-        """Display string formatted as Markdown.
+        r"""Display string formatted as Markdown.
 
         Parameters
         ----------
