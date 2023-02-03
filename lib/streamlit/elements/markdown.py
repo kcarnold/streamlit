@@ -68,7 +68,7 @@ class MarkdownMixin:
             https://github.com/streamlit/streamlit/issues/152
 
         help : str
-            An optional tooltip that gets displayed next to the markdown.
+            An optional tooltip that gets displayed next to the Markdown.
 
         Examples
         --------
