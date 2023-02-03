@@ -213,7 +213,7 @@ class MarkdownMixin:
             a lot.
 
         help : str
-            An optional tooltip that gets displayed next to the latex expression.
+            An optional tooltip that gets displayed next to the LaTeX expression.
 
 
         Example
