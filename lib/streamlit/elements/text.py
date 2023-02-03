@@ -39,7 +39,7 @@ class TextMixin:
             The string to display.
 
         help : str
-            An optional tooltip that gets displayed next to the widget.
+            An optional tooltip that gets displayed next to the text.
 
         Example
         -------
