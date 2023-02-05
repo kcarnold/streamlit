@@ -46,7 +46,14 @@ import {
   setCookie,
   getIFrameEnclosingApp,
   hashString,
-  isEmbeddedInIFrame,
+  isEmbed,
+  isShowPadding,
+  isShowToolbar,
+  isShowColoredLine,
+  isDisableScrolling,
+  isShowFooter,
+  isLightTheme,
+  isDarkTheme,
   isInChildFrame,
   notUndefined,
   getElementWidgetID,
@@ -296,7 +303,7 @@ export class App extends PureComponent<Props, State> {
         this.props.hostCommunication.setAllowedOriginsResp,
     })
 
-    if (isEmbeddedInIFrame()) {
+    if (isDisableScrolling()) {
       document.body.classList.add("embedded")
     }
 
@@ -895,9 +902,16 @@ export class App extends PureComponent<Props, State> {
     ) {
       const successful =
         status === ForwardMsg.ScriptFinishedStatus.FINISHED_SUCCESSFULLY
-      // Notify any subscribers of this event (and do it on the next cycle of
-      // the event loop)
       window.setTimeout(() => {
+        // Set the theme if url query param ?embed_options=[light,dark]_theme is set
+        const availableThemes = this.props.theme.availableThemes
+        if (isLightTheme()) {
+          this.setAndSendTheme(availableThemes[1])
+        } else if (isDarkTheme()) {
+          this.setAndSendTheme(availableThemes[2])
+        }
+        // Notify any subscribers of this event (and do it on the next cycle of
+        // the event loop)
         this.state.scriptFinishedHandlers.map(handler => handler())
       }, 0)
 
@@ -1393,7 +1407,7 @@ export class App extends PureComponent<Props, State> {
       "stApp",
       getEmbeddingIdClassName(this.embeddingId),
       {
-        "streamlit-embedded": isEmbeddedInIFrame(),
+        "streamlit-embedded": isEmbed(),
         "streamlit-wide": userSettings.wideMode,
       }
     )
@@ -1415,7 +1429,6 @@ export class App extends PureComponent<Props, State> {
           initialSidebarState,
           layout,
           wideMode: userSettings.wideMode,
-          embedded: isEmbeddedInIFrame(),
           isFullScreen,
           setFullScreen: this.handleFullScreen,
           addScriptFinishedHandler: this.addScriptFinishedHandler,
@@ -1427,6 +1440,12 @@ export class App extends PureComponent<Props, State> {
           sidebarChevronDownshift:
             this.props.hostCommunication.currentState.sidebarChevronDownshift,
           getBaseUriParts: this.getBaseUriParts,
+          embedded: isEmbed(),
+          showPadding: isShowPadding(),
+          disableScrolling: isDisableScrolling(),
+          showFooter: isShowFooter(),
+          showToolbar: !isEmbed() || isShowToolbar(),
+          showColoredLine: !isEmbed() || isShowColoredLine(),
         }}
       >
         <HotKeys
