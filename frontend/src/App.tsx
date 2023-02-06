@@ -83,7 +83,7 @@ import {
   IAppPage,
   AppPage,
 } from "src/autogen/proto"
-import { without, concat } from "lodash"
+import { without, concat, noop } from "lodash"
 
 import { RERUN_PROMPT_MODAL_DIALOG } from "src/lib/baseconsts"
 import { SessionInfo } from "src/lib/SessionInfo"
@@ -904,12 +904,13 @@ export class App extends PureComponent<Props, State> {
         status === ForwardMsg.ScriptFinishedStatus.FINISHED_SUCCESSFULLY
       window.setTimeout(() => {
         // Set the theme if url query param ?embed_options=[light,dark]_theme is set
-        const availableThemes = this.props.theme.availableThemes
+        const [light, dark] = this.props.theme.availableThemes.slice(1, 3)
         if (isLightTheme()) {
-          this.setAndSendTheme(availableThemes[1])
+          this.setAndSendTheme(light)
         } else if (isDarkTheme()) {
-          this.setAndSendTheme(availableThemes[2])
-        }
+          this.setAndSendTheme(dark)
+        } else noop() // Do nothing when ?embed_options=[light,dark]_theme is not set
+
         // Notify any subscribers of this event (and do it on the next cycle of
         // the event loop)
         this.state.scriptFinishedHandlers.map(handler => handler())
