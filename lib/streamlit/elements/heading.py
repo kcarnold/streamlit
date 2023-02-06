@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from enum import Enum
 from typing import TYPE_CHECKING, Optional, cast
 
 from streamlit.proto.Heading_pb2 import Heading as HeadingProto
@@ -22,9 +23,11 @@ from streamlit.type_util import SupportsStr
 if TYPE_CHECKING:
     from streamlit.delta_generator import DeltaGenerator
 
-TITLE_TAG = "h1"
-HEADER_TAG = "h2"
-SUBHEADER_TAG = "h3"
+
+class HeadingProtoTag(Enum):
+    TITLE_TAG = "h1"
+    HEADER_TAG = "h2"
+    SUBHEADER_TAG = "h3"
 
 
 class HeadingMixin:
@@ -73,14 +76,12 @@ class HeadingMixin:
         >>> st.header('A header with _italics_ :blue[colors] and emojis :sunglasses:')
 
         """
-        header_proto = HeadingProto()
-        if anchor is not None:
-            header_proto.anchor = anchor
-        header_proto.body = clean_text(body)
-        header_proto.tag = HEADER_TAG
-        if help:
-            header_proto.help = help
-        return self.dg._enqueue("heading", header_proto)
+        return self.dg._enqueue(
+            "heading",
+            HeadingMixin._create_heading_proto(
+                tag=HeadingProtoTag.HEADER_TAG, body=body, anchor=anchor, help=help
+            ),
+        )
 
     @gather_metrics("subheader")
     def subheader(
@@ -127,15 +128,12 @@ class HeadingMixin:
         >>> st.subheader('A subheader with _italics_ :blue[colors] and emojis :sunglasses:')
 
         """
-        subheader_proto = HeadingProto()
-        if anchor is not None:
-            subheader_proto.anchor = anchor
-        subheader_proto.body = clean_text(body)
-        subheader_proto.tag = SUBHEADER_TAG
-        if help:
-            subheader_proto.help = help
-
-        return self.dg._enqueue("heading", subheader_proto)
+        return self.dg._enqueue(
+            "heading",
+            HeadingMixin._create_heading_proto(
+                tag=HeadingProtoTag.SUBHEADER_TAG, body=body, anchor=anchor, help=help
+            ),
+        )
 
     @gather_metrics("title")
     def title(
@@ -185,17 +183,30 @@ class HeadingMixin:
         >>> st.title('A title with _italics_ :blue[colors] and emojis :sunglasses:')
 
         """
-        title_proto = HeadingProto()
-        if anchor is not None:
-            title_proto.anchor = anchor
-        title_proto.body = clean_text(body)
-        title_proto.tag = TITLE_TAG
-        if help:
-            title_proto.help = help
-
-        return self.dg._enqueue("heading", title_proto)
+        return self.dg._enqueue(
+            "heading",
+            HeadingMixin._create_heading_proto(
+                tag=HeadingProtoTag.TITLE_TAG, body=body, anchor=anchor, help=help
+            ),
+        )
 
     @property
     def dg(self) -> "DeltaGenerator":
         """Get our DeltaGenerator."""
         return cast("DeltaGenerator", self)
+
+    @staticmethod
+    def _create_heading_proto(
+        tag: HeadingProtoTag,
+        body: SupportsStr,
+        anchor: Optional[str] = None,
+        help: Optional[str] = None,
+    ) -> HeadingProto:
+        proto = HeadingProto()
+        proto.tag = tag.value
+        proto.body = clean_text(body)
+        if anchor:
+            proto.anchor = anchor
+        if help:
+            proto.help = help
+        return proto
