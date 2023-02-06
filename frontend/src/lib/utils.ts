@@ -121,11 +121,8 @@ export function isToolbarDisplayed(): boolean {
  * Returns true if the URL parameters contain ?embed=true&embed_options=disable_scrolling (case insensitive).
  */
 export function isScrollingHidden(): boolean {
-  return (
-    isEmbed() &&
-    getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(
-      EMBED_DISABLE_SCROLLING
-    )
+  return getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(
+    EMBED_DISABLE_SCROLLING
   )
 }
 

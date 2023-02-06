@@ -17,13 +17,13 @@
 import styled from "@emotion/styled"
 
 export interface StyledHeaderProps {
-  showColoredLine: boolean
+  showHeader: boolean
   isWideMode: boolean
   isStale?: boolean
 }
 
 export const StyledHeader = styled.header<StyledHeaderProps>(
-  ({ showColoredLine, isWideMode, theme }) => ({
+  ({ isWideMode, showHeader, theme }) => ({
     position: "fixed",
     top: theme.spacing.none,
     left: theme.spacing.none,
@@ -32,7 +32,7 @@ export const StyledHeader = styled.header<StyledHeaderProps>(
     background: theme.colors.bgColor,
     outline: "none",
     zIndex: theme.zIndices.header,
-    display: showColoredLine ? "block" : "none",
+    display: showHeader ? "block" : "none",
     "@media print": {
       display: "none",
     },

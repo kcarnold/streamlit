@@ -107,13 +107,14 @@ function AppView(props: AppViewProps): ReactElement {
     disableScrolling,
     showFooter,
     showToolbar,
+    showColoredLine,
   } = React.useContext(AppContext)
   const renderBlock = (node: BlockNode): ReactElement => (
     <StyledAppViewBlockContainer
       className="block-container"
       isWideMode={wideMode}
-      showPadding={!embedded || showPadding}
-      showToolbar={!embedded || showToolbar}
+      showPadding={showPadding}
+      addPaddingForHeader={showToolbar || showColoredLine}
     >
       <VerticalBlock
         node={node}
