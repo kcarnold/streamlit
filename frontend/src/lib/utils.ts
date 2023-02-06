@@ -98,7 +98,7 @@ export function isEmbed(): boolean {
 /**
  * Returns true if the URL parameters contain ?embed=true&embed_options=show_colored_line (case insensitive).
  */
-export function isShowColoredLine(): boolean {
+export function isColoredLineDisplayed(): boolean {
   return (
     isEmbed() &&
     getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(
@@ -110,7 +110,7 @@ export function isShowColoredLine(): boolean {
 /**
  * Returns true if the URL parameters contain ?embed=true&embed_options=show_toolbar (case insensitive).
  */
-export function isShowToolbar(): boolean {
+export function isToolbarDisplayed(): boolean {
   return (
     isEmbed() &&
     getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(EMBED_SHOW_TOOLBAR)
@@ -120,7 +120,7 @@ export function isShowToolbar(): boolean {
 /**
  * Returns true if the URL parameters contain ?embed=true&embed_options=disable_scrolling (case insensitive).
  */
-export function isDisableScrolling(): boolean {
+export function isScrollingHidden(): boolean {
   return (
     isEmbed() &&
     getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(
@@ -132,7 +132,7 @@ export function isDisableScrolling(): boolean {
 /**
  * Returns true if the URL parameters contain ?embed=true&embed_options=show_footer (case insensitive).
  */
-export function isShowFooter(): boolean {
+export function isFooterDisplayed(): boolean {
   return (
     isEmbed() &&
     getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(EMBED_SHOW_FOOTER)
@@ -142,7 +142,7 @@ export function isShowFooter(): boolean {
 /**
  * Returns true if the URL parameters contain ?embed=true&embed_options=show_padding (case insensitive).
  */
-export function isShowPadding(): boolean {
+export function isPaddingDisplayed(): boolean {
   return (
     isEmbed() &&
     getEmbedUrlParams(EMBED_OPTIONS_QUERY_PARAM_KEY).has(EMBED_SHOW_PADDING)

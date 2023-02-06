@@ -47,11 +47,11 @@ import {
   getIFrameEnclosingApp,
   hashString,
   isEmbed,
-  isShowPadding,
-  isShowToolbar,
-  isShowColoredLine,
-  isDisableScrolling,
-  isShowFooter,
+  isPaddingDisplayed,
+  isToolbarDisplayed,
+  isColoredLineDisplayed,
+  isScrollingHidden,
+  isFooterDisplayed,
   isLightTheme,
   isDarkTheme,
   isInChildFrame,
@@ -303,7 +303,7 @@ export class App extends PureComponent<Props, State> {
         this.props.hostCommunication.setAllowedOriginsResp,
     })
 
-    if (isDisableScrolling()) {
+    if (isScrollingHidden()) {
       document.body.classList.add("embedded")
     }
 
@@ -1441,11 +1441,11 @@ export class App extends PureComponent<Props, State> {
             this.props.hostCommunication.currentState.sidebarChevronDownshift,
           getBaseUriParts: this.getBaseUriParts,
           embedded: isEmbed(),
-          showPadding: isShowPadding(),
-          disableScrolling: isDisableScrolling(),
-          showFooter: isShowFooter(),
-          showToolbar: !isEmbed() || isShowToolbar(),
-          showColoredLine: !isEmbed() || isShowColoredLine(),
+          showPadding: isPaddingDisplayed(),
+          disableScrolling: isScrollingHidden(),
+          showFooter: isFooterDisplayed(),
+          showToolbar: !isEmbed() || isToolbarDisplayed(),
+          showColoredLine: !isEmbed() || isColoredLineDisplayed(),
         }}
       >
         <HotKeys
