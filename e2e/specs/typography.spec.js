@@ -114,9 +114,12 @@ describe("app typography", () => {
 });
 
 function getElementNextToText(text) {
-  return cy
+  let el = cy
     .get("[data-testid='stText']")
     .contains(text)
     .parent()
-    .next();
+  if (text.length > 40) {
+    el = el.parent()
+  }
+  return el.next()
 }
