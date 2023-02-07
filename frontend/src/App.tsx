@@ -1442,9 +1442,9 @@ export class App extends PureComponent<Props, State> {
             this.props.hostCommunication.currentState.sidebarChevronDownshift,
           getBaseUriParts: this.getBaseUriParts,
           embedded: isEmbed(),
-          showPadding: isPaddingDisplayed(),
+          showPadding: !isEmbed() || isPaddingDisplayed(),
           disableScrolling: isScrollingHidden(),
-          showFooter: isFooterDisplayed(),
+          showFooter: !isEmbed() || isFooterDisplayed(),
           showToolbar: !isEmbed() || isToolbarDisplayed(),
           showColoredLine: !isEmbed() || isColoredLineDisplayed(),
         }}
