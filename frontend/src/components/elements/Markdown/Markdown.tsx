@@ -47,7 +47,7 @@ export default function Markdown({
           />
           <InlineTooltipIcon
             content={element.help}
-            isLatex={element.elementType === 4}
+            isLatex={element.elementType === MarkdownProto.Type.LATEX}
           ></InlineTooltipIcon>
         </StyledLabelHelpWrapper>
       ) : (
