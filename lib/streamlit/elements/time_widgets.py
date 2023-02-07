@@ -47,6 +47,8 @@ SingleDateValue: TypeAlias = Union[date, datetime, None]
 DateValue: TypeAlias = Union[SingleDateValue, Sequence[SingleDateValue]]
 DateWidgetReturn: TypeAlias = Union[date, Tuple[()], Tuple[date], Tuple[date, date]]
 
+DEFAULT_STEP_MINUTES = 15
+
 
 def _parse_date_value(value: DateValue) -> Tuple[List[date], bool]:
     parsed_dates: List[date]
@@ -222,7 +224,7 @@ class TimeWidgetsMixin:
         *,  # keyword-only arguments:
         disabled: bool = False,
         label_visibility: LabelVisibility = "visible",
-        step: Union[int, timedelta] = timedelta(minutes=15),
+        step: Union[int, timedelta] = timedelta(minutes=DEFAULT_STEP_MINUTES),
     ) -> time:
         r"""Display a time input widget.
 
@@ -327,7 +329,7 @@ class TimeWidgetsMixin:
         *,  # keyword-only arguments:
         disabled: bool = False,
         label_visibility: LabelVisibility = "visible",
-        step: Union[int, timedelta] = timedelta(minutes=15),
+        step: Union[int, timedelta] = timedelta(minutes=DEFAULT_STEP_MINUTES),
         ctx: Optional[ScriptRunContext] = None,
     ) -> time:
         key = to_key(key)
