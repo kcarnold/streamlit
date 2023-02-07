@@ -45,7 +45,10 @@ export default function Markdown({
             source={element.body}
             allowHTML={element.allowHtml}
           />
-          <InlineTooltipIcon content={element.help}></InlineTooltipIcon>
+          <InlineTooltipIcon
+            content={element.help}
+            isLatex={element.elementType === 4}
+          ></InlineTooltipIcon>
         </StyledLabelHelpWrapper>
       ) : (
         <StreamlitMarkdown

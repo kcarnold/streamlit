@@ -30,6 +30,7 @@ import {
 export interface TooltipIconProps {
   placement?: Placement
   iconSize?: string
+  isLatex?: boolean
   content: string
   children?: ReactNode
   markdownProps?: Partial<StreamlitMarkdownProps>
@@ -38,13 +39,14 @@ export interface TooltipIconProps {
 function TooltipIcon({
   placement = Placement.AUTO,
   iconSize = "16",
+  isLatex = false,
   content,
   children,
   markdownProps,
 }: TooltipIconProps): ReactElement {
   const theme: Theme = useTheme()
   return (
-    <StyledTooltipIconWrapper className="stTooltipIcon">
+    <StyledTooltipIconWrapper className="stTooltipIcon" isLatex={isLatex}>
       <Tooltip
         content={
           <StreamlitMarkdown
@@ -66,6 +68,7 @@ function TooltipIcon({
 export const InlineTooltipIcon = ({
   placement = Placement.TOP_RIGHT,
   iconSize = "16",
+  isLatex = false,
   content,
   children,
   markdownProps,
@@ -75,6 +78,7 @@ export const InlineTooltipIcon = ({
       <TooltipIcon
         placement={placement}
         iconSize={iconSize}
+        isLatex={isLatex}
         content={content}
         markdownProps={markdownProps}
       >

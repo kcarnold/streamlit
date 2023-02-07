@@ -16,20 +16,26 @@
 
 import styled from "@emotion/styled"
 
-export const StyledTooltipIconWrapper = styled.div(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
+interface StyledTooltipIconWrapperProps {
+  isLatex?: boolean
+}
 
-  svg: {
-    stroke: theme.colors.fadedText40,
-    strokeWidth: 2.25,
-  },
-  ":hover": {
+export const StyledTooltipIconWrapper =
+  styled.div<StyledTooltipIconWrapperProps>(({ isLatex, theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    marginTop: isLatex ? "12px" : "0",
+
     svg: {
-      stroke: theme.colors.fadedText60,
+      stroke: theme.colors.fadedText60, // TODO Tomek this should have st.caption color which is fadedText60
+      strokeWidth: 2.25, // TODO previously its colour was set to fadedText40
     },
-  },
-}))
+    ":hover": {
+      svg: {
+        stroke: theme.colors.fadedText60,
+      },
+    },
+  }))
 
 export const StyledLabelHelpWrapper = styled.div(({ theme }) => ({
   display: "flex",
