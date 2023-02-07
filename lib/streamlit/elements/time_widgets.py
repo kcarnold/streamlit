@@ -354,14 +354,11 @@ class TimeWidgetsMixin:
         time_input_proto.label = label
         time_input_proto.default = time.strftime(parsed_time, "%H:%M")
         time_input_proto.form_id = current_form_id(self.dg)
-        step_type = "seconds"
         if isinstance(step, timedelta):
-            step_type = "timedelta"
             step = step.seconds
         if step < 60 or step > timedelta(hours=23).seconds:
             raise StreamlitAPIException(
-                f"Step {step_type} must be "
-                f"longer than 1 minute and shorten than 23 hours. Current value is {step}s."
+                f"`step` must be between 60 seconds and 23 hours but is currently set to {step} seconds."
             )
         time_input_proto.step = step
         if help is not None:
