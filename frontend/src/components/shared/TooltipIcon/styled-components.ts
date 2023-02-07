@@ -27,8 +27,8 @@ export const StyledTooltipIconWrapper =
     marginTop: isLatex ? "12px" : "0",
 
     svg: {
-      stroke: theme.colors.fadedText60, // TODO Tomek this should have st.caption color which is fadedText60
-      strokeWidth: 2.25, // TODO previously its colour was set to fadedText40
+      stroke: theme.colors.fadedText60,
+      strokeWidth: 2.25,
     },
     ":hover": {
       svg: {
