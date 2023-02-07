@@ -14,6 +14,7 @@
 
 """Streamlit Unit test."""
 
+import datetime
 import json
 import os
 import re
@@ -661,6 +662,24 @@ class StreamlitAPITest(DeltaGeneratorTestCase):
         self.assertEqual(el.heading.body, "some title")
         self.assertEqual(el.heading.tag, "h1")
         self.assertEqual(el.heading.anchor, "some-anchor")
+
+    def test_st_time_input(self):
+        """Test st.time_input."""
+        value = datetime.time(8, 45)
+        st.time_input("Set an alarm for", value)
+
+        el = self.get_delta_from_queue().new_element
+        self.assertEqual(el.time_input.default, "08:45")
+        self.assertEqual(el.time_input.step, datetime.timedelta(minutes=15).seconds)
+
+    def test_st_time_input_with_step(self):
+        """Test st.time_input with step."""
+        value = datetime.time(9, 00)
+        st.time_input("Set an alarm for", value, step=datetime.timedelta(minutes=5))
+
+        el = self.get_delta_from_queue().new_element
+        self.assertEqual(el.time_input.default, "09:00")
+        self.assertEqual(el.time_input.step, datetime.timedelta(minutes=5).seconds)
 
     def test_st_legacy_vega_lite_chart(self):
         """Test st._legacy_vega_lite_chart."""

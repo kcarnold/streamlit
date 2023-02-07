@@ -225,6 +225,7 @@ class TimeInput extends PureComponent<Props, State> {
         </WidgetLabel>
         <UITimePicker
           format="24"
+          step={element.step ? Number(element.step) : 900} // step in seconds, defaults to 900s (15 minutes)
           value={this.stringToDate(this.state.value)}
           onChange={this.handleChange}
           overrides={selectOverrides}

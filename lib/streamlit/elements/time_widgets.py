@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from textwrap import dedent
 from typing import TYPE_CHECKING, Any, List, Optional, Sequence, Tuple, Union, cast
 
@@ -222,6 +222,7 @@ class TimeWidgetsMixin:
         *,  # keyword-only arguments:
         disabled: bool = False,
         label_visibility: LabelVisibility = "visible",
+        step: Union[int, timedelta] = timedelta(minutes=15),
     ) -> time:
         r"""Display a time input widget.
 
@@ -277,6 +278,9 @@ class TimeWidgetsMixin:
             is still empty space for it above the widget (equivalent to label="").
             If "collapsed", both the label and the space are removed. Default is
             "visible". This argument can only be supplied by keyword.
+        step : int or timedelta
+            The stepping interval in seconds. Defaults to 900, i.e. 15 minutes.
+            You can also pass a datetime.timedelta object.
 
         Returns
         -------
@@ -307,6 +311,7 @@ class TimeWidgetsMixin:
             kwargs=kwargs,
             disabled=disabled,
             label_visibility=label_visibility,
+            step=step,
             ctx=ctx,
         )
 
@@ -322,6 +327,7 @@ class TimeWidgetsMixin:
         *,  # keyword-only arguments:
         disabled: bool = False,
         label_visibility: LabelVisibility = "visible",
+        step: Union[int, timedelta] = timedelta(minutes=15),
         ctx: Optional[ScriptRunContext] = None,
     ) -> time:
         key = to_key(key)
@@ -348,6 +354,16 @@ class TimeWidgetsMixin:
         time_input_proto.label = label
         time_input_proto.default = time.strftime(parsed_time, "%H:%M")
         time_input_proto.form_id = current_form_id(self.dg)
+        step_type = "seconds"
+        if isinstance(step, timedelta):
+            step_type = "timedelta"
+            step = step.seconds
+        if step < 60 or step > timedelta(hours=23).seconds:
+            raise StreamlitAPIException(
+                f"Step {step_type} must be "
+                f"longer than 1 minute and shorten than 23 hours. Current value is {step}s."
+            )
+        time_input_proto.step = step
         if help is not None:
             time_input_proto.help = dedent(help)
 

@@ -31,6 +31,7 @@ const getProps = (elementProps: Partial<TimeInputProto> = {}): Props => ({
     id: "123",
     label: "Label",
     default: "12:45",
+    step: 900,
     ...elementProps,
   }),
   width: 0,
@@ -182,5 +183,17 @@ describe("TimeInput widget", () => {
         fromUi: true,
       }
     )
+  })
+
+  it("has step parameter which defaults to 900 seconds (15 minutes)", () => {
+    const props = getProps()
+    const wrapper = shallow(<TimeInput {...props} />)
+    expect(wrapper.find(UITimePicker).prop("step")).toBe(900)
+  })
+
+  it("has step parameter properly overwritten", () => {
+    const props = getProps({ step: 60 })
+    const wrapper = shallow(<TimeInput {...props} />)
+    expect(wrapper.find(UITimePicker).prop("step")).toBe(60)
   })
 })
