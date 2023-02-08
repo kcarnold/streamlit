@@ -681,6 +681,22 @@ class StreamlitAPITest(DeltaGeneratorTestCase):
         self.assertEqual(el.time_input.default, "09:00")
         self.assertEqual(el.time_input.step, datetime.timedelta(minutes=5).seconds)
 
+    def test_st_time_input_exceptions(self):
+        """Test st.time_input exceptions."""
+        value = datetime.time(9, 00)
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=True)
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=(90, 0))
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=1)
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=59)
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=datetime.timedelta(hours=24))
+        with self.assertRaises(StreamlitAPIException):
+            st.time_input("Set an alarm for", value, step=datetime.timedelta(days=1))
+
     def test_st_legacy_vega_lite_chart(self):
         """Test st._legacy_vega_lite_chart."""
         pass
