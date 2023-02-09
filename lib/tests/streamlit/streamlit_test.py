@@ -144,6 +144,8 @@ class StreamlitTest(unittest.TestCase):
                 "session_state",
                 "cache_data",
                 "cache_resource",
+                "modal",
+                "modal_submit_button",
                 # Beta APIs:
                 "beta_container",
                 "beta_expander",

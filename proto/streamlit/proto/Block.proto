@@ -25,6 +25,7 @@ message Block {
     Form form = 5;
     TabContainer tab_container = 6;
     Tab tab = 7;
+    Modal modal = 9;
   }
 
   bool allow_empty = 8;
@@ -58,5 +59,10 @@ message Block {
     string label = 1;
   }
 
-  // Next ID: 9
+  message Modal {
+    string form_id = 1;
+    bool clear_on_submit = 2;
+  }
+
+  // Next ID: 10
 }

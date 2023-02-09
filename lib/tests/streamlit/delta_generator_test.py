@@ -152,6 +152,8 @@ class RunWarningTest(unittest.TestCase):
                 "video",
                 "warning",
                 "write",
+                "modal",
+                "modal_submit_button",
             },
         )
 

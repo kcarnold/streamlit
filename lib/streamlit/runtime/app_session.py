@@ -282,6 +282,8 @@ class AppSession:
                 self._handle_set_run_on_save_request(msg.set_run_on_save)
             elif msg_type == "stop_script":
                 self._handle_stop_script_request()
+            elif msg_type == "close_modal":
+                self._handle_close_modal()
             else:
                 LOGGER.warning('No handler for "%s"', msg_type)
 
@@ -585,6 +587,11 @@ class AppSession:
         if app_is_running != app_was_running:
             self._enqueue_forward_msg(self._create_session_status_changed_message())
 
+    def _create_close_modal_event(self) -> ForwardMsg:
+        msg = ForwardMsg()
+        msg.update_modal_state_event.open_modal_id = "modal_closed"
+        return msg
+
     def _create_session_status_changed_message(self) -> ForwardMsg:
         """Create and return a session_status_changed ForwardMsg."""
         msg = ForwardMsg()
@@ -711,6 +718,9 @@ class AppSession:
         caching.cache_data.clear()
         caching.cache_resource.clear()
         self._session_state.clear()
+
+    def _handle_close_modal(self) -> None:
+        self._enqueue_forward_msg(self._create_close_modal_event())
 
     def _handle_set_run_on_save_request(self, new_value: bool) -> None:
         """Change our run_on_save flag to the given value.

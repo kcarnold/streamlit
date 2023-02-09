@@ -165,6 +165,9 @@ video = _main.video
 warning = _main.warning
 write = _main.write
 color_picker = _main.color_picker
+modal = _main.modal
+modal_submit_button = _main.modal_submit_button
+
 
 # Legacy
 _legacy_dataframe = _main._legacy_dataframe
